@@ -2,31 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:instagram_clone_flutter/presentation/cubit/auth_cubit.dart';
-import 'package:instagram_clone_flutter/presentation/screens/register_screen.dart';
+import 'package:instagram_clone_flutter/presentation/screens/login_screen.dart';
 import 'package:instagram_clone_flutter/presentation/widgets/custom_button.dart';
 import 'package:instagram_clone_flutter/presentation/widgets/custom_text_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const String routeName = '/login';
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  static const String routeName = '/register';
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  Future<void> login() async {
-    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+  final TextEditingController _nameController = TextEditingController();
+  Future<void> register() async {
+    if (_emailController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _nameController.text.isEmpty) {
       return;
     }
-    BlocProvider.of<AuthCubit>(context).login(
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
   }
 
   @override
@@ -41,6 +39,13 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Image.asset("assets/images/logo.png"),
             const SizedBox(height: 50),
+            CustomTextField(
+              hintText: 'Name',
+              controller: _nameController,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             CustomTextField(
               hintText: 'Email',
               controller: _emailController,
@@ -58,8 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
             BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
                 return CustomButton(
-                  text: "Login",
-                  onPressed: login,
+                  text: "Register",
+                  onPressed: register,
                   isLoading: state is AuthLoading ? true : false,
                 );
               },
@@ -94,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Don\'t have an account?',
+                  'Already have an account?',
                   style: TextStyle(
                     color: Colors.grey,
                   ),
@@ -103,9 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 5,
                 ),
                 GestureDetector(
-                  onTap: () => Get.offAllNamed(RegisterScreen.routeName),
+                  onTap: () => Get.offAllNamed(LoginScreen.routeName),
                   child: const Text(
-                    "Sign Up",
+                    "Sign In",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,

@@ -37,6 +37,13 @@ class CustomTextField extends StatelessWidget {
               color: HexColor("#FAFAFA"),
             ),
           ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: BorderSide(
+              width: 1,
+              color: HexColor("#FAFAFA"),
+            ),
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(

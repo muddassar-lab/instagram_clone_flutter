@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "720444530363",
+    "project_id": "expo-instagram-clone",
+    "storage_bucket": "expo-instagram-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720444530363:android:2b54139f9b0acb3213939e",
+        "android_client_info": {
+          "package_name": "com.example.instagram_clone_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720444530363-1bki7l5qpedev7ftlnngr3hc47e9lh3h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXB5Wyq38VHdfXyYZnQF3aJen0LMI2GHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720444530363-1bki7l5qpedev7ftlnngr3hc47e9lh3h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
