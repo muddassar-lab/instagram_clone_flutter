@@ -49,8 +49,7 @@ class AuthRepositoryImplementation implements AuthRepository {
   }) async {
     try {
       final imageName = "${DateTime.now().millisecondsSinceEpoch}.jpg";
-      final reference = storage.ref();
-      reference.child("users").child(imageName);
+      final reference = storage.ref().child('users').child(imageName);
       final String downloadUrl = await _uploadImageToFirebase(
         file: profileImageFile,
         reference: reference,

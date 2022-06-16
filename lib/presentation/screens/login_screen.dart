@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:instagram_clone_flutter/presentation/cubit/auth_cubit.dart';
+
 import 'package:instagram_clone_flutter/presentation/screens/register_screen.dart';
 import 'package:instagram_clone_flutter/presentation/widgets/custom_button.dart';
 import 'package:instagram_clone_flutter/presentation/widgets/custom_text_field.dart';
@@ -23,10 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       return;
     }
-    BlocProvider.of<AuthCubit>(context).login(
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
   }
 
   @override
@@ -55,14 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 40,
             ),
-            BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, state) {
-                return CustomButton(
-                  text: "Login",
-                  onPressed: login,
-                  isLoading: state is AuthLoading ? true : false,
-                );
-              },
+            CustomButton(
+              text: "Login",
+              onPressed: login,
+              isLoading: false,
             ),
             const SizedBox(
               height: 40,
