@@ -43,6 +43,9 @@ dependencies:
   equatable: ^2.0.3
   image_picker: ^0.8.5+3
   logger: ^1.1.0
+  cached_network_image: ^3.2.1
+  photo_manager: ^2.1.2
+  flutter_native_splash: ^2.2.3+1
 
 dev_dependencies:
   flutter_test:

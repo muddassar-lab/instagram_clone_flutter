@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
   final bool isLoading;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   const CustomButton({
     Key? key,
     required this.text,

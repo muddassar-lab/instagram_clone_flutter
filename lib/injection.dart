@@ -1,24 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone_flutter/data/repositories/auth_repository_implementation.dart';
+import 'package:instagram_clone_flutter/data/repositories/posts_repository_implementation.dart';
 import 'package:instagram_clone_flutter/domain/repositories/auth_repository.dart';
+import 'package:instagram_clone_flutter/domain/repositories/post_repository.dart';
 import 'package:instagram_clone_flutter/presentation/controllers/auth_controller.dart';
+import 'package:instagram_clone_flutter/presentation/controllers/gallery_image_controller.dart';
+import 'package:instagram_clone_flutter/presentation/controllers/posts_controller.dart';
 import 'package:logger/logger.dart';
 
 class Inject {
-  static void inject() async {
+  static Future<void> inject() async {
     //Third party libraries are initialized here.
     final FirebaseAuth auth = FirebaseAuth.instance;
     final FirebaseStorage storage = FirebaseStorage.instance;
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final Logger logger = Logger();
     final ImagePicker imagePicker = ImagePicker();
     Get.lazyPut<FirebaseAuth>(() => auth);
     Get.lazyPut<FirebaseStorage>(() => storage);
     Get.lazyPut<Logger>(() => logger);
     Get.lazyPut<ImagePicker>(() => imagePicker);
+    Get.lazyPut(() => firestore);
 
     //Repositories are initialized here.
     Get.lazyPut<AuthRepository>(
@@ -27,12 +34,32 @@ class Inject {
         storage: Get.find(),
       ),
     );
+    Get.lazyPut<PostRepository>(
+      () => PostsRepositoryImplementation(
+        auth: Get.find(),
+        storage: Get.find(),
+        firestore: Get.find(),
+      ),
+    );
 
     //Controllers are initialized here.
     Get.put(
       AuthController(
         auth: Get.find(),
         logger: Get.find(),
+      ),
+    );
+    await Get.putAsync<GalleryImageController>(
+      () async {
+        final GalleryImageController galleryImageController =
+            GalleryImageController();
+        await galleryImageController.loadAlbumsAndPhotos();
+        return galleryImageController;
+      },
+    );
+    Get.lazyPut(
+      () => PostsController(
+        postRepository: Get.find(),
       ),
     );
   }

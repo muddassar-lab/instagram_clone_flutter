@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:instagram_clone_flutter/presentation/controllers/auth_controller.dart';
 
 import 'package:instagram_clone_flutter/presentation/screens/register_screen.dart';
 import 'package:instagram_clone_flutter/presentation/widgets/custom_button.dart';
@@ -17,12 +15,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final AuthController authController = Get.find();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   Future<void> login() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       return;
     }
+    authController.login(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
   }
 
   @override
@@ -35,7 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset("assets/images/logo.png"),
+            Image.asset(
+              "assets/images/logo.png",
+              width: 200,
+              height: 100,
+            ),
             const SizedBox(height: 50),
             CustomTextField(
               hintText: 'Email',
@@ -51,10 +58,12 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 40,
             ),
-            CustomButton(
-              text: "Login",
-              onPressed: login,
-              isLoading: false,
+            Obx(
+              () => CustomButton(
+                text: "Login",
+                onPressed: login,
+                isLoading: authController.loading,
+              ),
             ),
             const SizedBox(
               height: 40,

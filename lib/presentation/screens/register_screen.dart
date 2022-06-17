@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone_flutter/common/helpers/image_picker_helper.dart';
 import 'package:instagram_clone_flutter/presentation/controllers/auth_controller.dart';
@@ -61,7 +59,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset("assets/images/logo.png"),
+                Image.asset(
+                  "assets/images/logo.png",
+                  width: 200,
+                  height: 100,
+                  fit: BoxFit.contain,
+                ),
                 const SizedBox(height: 20),
                 SizedBox(
                   width: 100,
@@ -116,11 +119,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(
                   height: 40,
                 ),
-                Obx(() => CustomButton(
-                      text: "Register",
-                      onPressed: register,
-                      isLoading: authController.loading,
-                    )),
+                Obx(
+                  () => CustomButton(
+                    text: "Register",
+                    onPressed: register,
+                    isLoading: authController.loading,
+                  ),
+                ),
                 const SizedBox(
                   height: 40,
                 ),

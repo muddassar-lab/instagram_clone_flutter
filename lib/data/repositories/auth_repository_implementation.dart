@@ -31,13 +31,21 @@ class AuthRepositoryImplementation implements AuthRepository {
     return auth.authStateChanges();
   }
 
-  Future<String> _uploadImageToFirebase({
+  Future<String?> uploadImageToFirebase({
     required File file,
     required Reference reference,
   }) async {
     final TaskSnapshot uploadTask = await reference.putFile(file);
-    final String downloadUrl = await uploadTask.ref.getDownloadURL();
-    return downloadUrl;
+    if (uploadTask.state == TaskState.success) {
+      final String downloadUrl = await reference.getDownloadURL();
+      return downloadUrl;
+    }
+    return null;
+  }
+
+  @override
+  User? getCurrentUser() {
+    return auth.currentUser;
   }
 
   @override
@@ -50,7 +58,7 @@ class AuthRepositoryImplementation implements AuthRepository {
     try {
       final imageName = "${DateTime.now().millisecondsSinceEpoch}.jpg";
       final reference = storage.ref().child('users').child(imageName);
-      final String downloadUrl = await _uploadImageToFirebase(
+      final String? downloadUrl = await uploadImageToFirebase(
         file: profileImageFile,
         reference: reference,
       );
