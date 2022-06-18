@@ -46,6 +46,7 @@ dependencies:
   cached_network_image: ^3.2.1
   photo_manager: ^2.1.2
   flutter_native_splash: ^2.2.3+1
+  path: ^1.8.1
 
 dev_dependencies:
   flutter_test:

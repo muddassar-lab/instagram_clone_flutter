@@ -9,12 +9,12 @@ class GalleryImageController extends GetxController {
   final Rx<AssetPathEntity?> _selectedAlbum = Rx<AssetPathEntity?>(null);
   final Rx<List<AssetPathEntity>> _albums = Rx<List<AssetPathEntity>>([]);
   final Rx<bool> _loading = Rx<bool>(false);
-  final Rx<int> _end = Rx<int>(30);
+  final Rx<int> _end = Rx<int>(10);
 
   Future<void> loadMoreImages() async {
     _loading.value = true;
     final int start = _end.value;
-    _end.value += 30;
+    _end.value += 10;
     await _loadPhotos(start: start, end: _end.value, replace: false);
     _photos.refresh();
 
@@ -32,6 +32,14 @@ class GalleryImageController extends GetxController {
     _selectedAlbum.value = albums.first;
     await _loadPhotos(start: 0, end: _end.value, replace: true);
     _loading.value = false;
+  }
+
+  void clear() {
+    _photos.value.forEach((element) {});
+    _photos.value = [];
+    _selectedPhoto.value = null;
+    _selectedAlbum.value = null;
+    _albums.value = [];
   }
 
   Future<List<File>> _loadPhotos({
@@ -75,7 +83,4 @@ class GalleryImageController extends GetxController {
   File? get selectedPhoto => _selectedPhoto.value;
   AssetPathEntity? get selectedAlbum => _selectedAlbum.value;
   bool get loading => _loading.value;
-
-  //Listeners
-
 }

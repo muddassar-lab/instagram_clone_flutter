@@ -18,6 +18,12 @@ class _SavePostScreenState extends State<SavePostScreen> {
   final GalleryImageController galleryImageController = Get.find();
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

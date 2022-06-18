@@ -14,6 +14,7 @@ Future<File?> pickImageFromGallery() async {
 Future<File?> pickImageFromCamera() async {
   final pickedImage = await Get.find<ImagePicker>().pickImage(
     source: ImageSource.camera,
+    imageQuality: 50,
   );
   if (pickedImage == null) return null;
   return File(pickedImage.path);

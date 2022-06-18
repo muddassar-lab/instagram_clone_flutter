@@ -4,6 +4,7 @@ import 'package:instagram_clone_flutter/common/helpers/image_picker_helper.dart'
 import 'package:instagram_clone_flutter/presentation/controllers/gallery_image_controller.dart';
 import 'package:instagram_clone_flutter/presentation/screens/save_post_screen.dart';
 import 'package:instagram_clone_flutter/presentation/widgets/gallery_image_thumbnail.dart';
+import 'package:logger/logger.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -33,13 +34,26 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   void initState() {
     super.initState();
+    galleryImageController.loadAlbumsAndPhotos();
     _scrollController.addListener(_scrollListener);
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+    galleryImageController.clear();
+    print("Cleared gallery image controller values");
+  }
+
   Future<void> _pickImage() async {
-    final pickedImage = await pickImageFromCamera();
-    if (pickedImage == null) return;
-    galleryImageController.selectPhoto(pickedImage);
+    try {
+      final pickedImage = await pickImageFromCamera();
+      if (pickedImage == null) return;
+      galleryImageController.selectPhoto(pickedImage);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override

@@ -20,11 +20,10 @@ class Inject {
     final FirebaseStorage storage = FirebaseStorage.instance;
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final Logger logger = Logger();
-    final ImagePicker imagePicker = ImagePicker();
     Get.lazyPut<FirebaseAuth>(() => auth);
     Get.lazyPut<FirebaseStorage>(() => storage);
     Get.lazyPut<Logger>(() => logger);
-    Get.lazyPut<ImagePicker>(() => imagePicker);
+    Get.put<ImagePicker>(ImagePicker());
     Get.lazyPut(() => firestore);
 
     //Repositories are initialized here.
@@ -49,14 +48,7 @@ class Inject {
         logger: Get.find(),
       ),
     );
-    await Get.putAsync<GalleryImageController>(
-      () async {
-        final GalleryImageController galleryImageController =
-            GalleryImageController();
-        await galleryImageController.loadAlbumsAndPhotos();
-        return galleryImageController;
-      },
-    );
+    Get.lazyPut(() => GalleryImageController());
     Get.lazyPut(
       () => PostsController(
         postRepository: Get.find(),
